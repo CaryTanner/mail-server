@@ -1,7 +1,7 @@
 // Import all dependencies & middleware here
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 require('dotenv').config()
 const hbs = require("nodemailer-express-handlebars");
 
