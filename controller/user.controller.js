@@ -1,5 +1,5 @@
-import express from 'express';
-import sha256 from 'sha256';
+const express = require ('express');
+const sha256 = require('sha256');
 import { User } from '../database/models';
 
 const userController = express.Router();
