@@ -74,7 +74,7 @@ const mailOptionsToNewContact = {
     to: data.email,
     subject: 'Contact from Cary Tanner- Web Developer',
    
-    html: `<h5>Hi ${data.name},</h5>
+    html: `<p>Hi ${data.name},</p>
 
     <p>Thanks for getting in touch!</p>
     
