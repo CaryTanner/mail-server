@@ -6,7 +6,7 @@ require('dotenv').config()
 const hbs = require("nodemailer-express-handlebars");
 
 import { userController, mailingController } from './controller';
-
+let PORT = process.env.PORT || 8080
 // Init an Express App.
 const app = express();
 
