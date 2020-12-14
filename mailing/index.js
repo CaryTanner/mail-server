@@ -41,6 +41,7 @@ const hbsOptions = {
  */
 async function sendEmail(data){
     console.log(data)
+    
    try { 
   oauth2Client.setCredentials({
     refresh_token: MAILING_SERVICE_REFRESH_TOKEN,
@@ -49,7 +50,7 @@ async function sendEmail(data){
   
   const accessToken =  await oauth2Client.getAccessToken();
   
-
+console.log(accessToken)
   
   const smtpTransport = nodemailer.createTransport({
     service: 'gmail',
