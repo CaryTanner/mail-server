@@ -77,7 +77,7 @@ const mailOptionsToNewContact = {
 
     <h2> Thanks for getting in touch! </h2>
     
-    <h2> This is an auto-reply but I will get back to you ASAP.</h2>
+    <h2> This is an auto-reply but, I will get back to you ASAP.</h2>
     
     <h2>All the best,</h2>
     
