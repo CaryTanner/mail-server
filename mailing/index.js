@@ -74,17 +74,17 @@ const mailOptionsToNewContact = {
     to: data.email,
     subject: 'Contact from Cary Tanner- Web Developer',
    
-    html: `<h1> Hi ${data.name},</h1>
+    html: `<h5>Hi ${data.name},</h5>
 
-    <h2> Thanks for getting in touch! </h2>
+    <p>Thanks for getting in touch!</p>
     
-    <h2> This is an auto-reply but, I will get back to you ASAP.</h2>
+    <p>This is an auto-reply but I will get back to you ASAP.</p>
     
-    <h2>All the best,</h2>
+    <p>All the best,</p>
     
-    <h1>Cary Tanner<h1>
+    <p>Cary Tanner<p>
     
-    <h3> Web Developer- <a href="https://carytanner.com">carytanner.com</a></h3> 
+    <p> Web Developer- <a href="https://carytanner.com">carytanner.com</a></p> 
     `
 }
 
