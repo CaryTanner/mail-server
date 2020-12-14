@@ -8,11 +8,12 @@ import sendEmail from '../mailing';
 
   mailingController.post('/', (req, res) => {
       try {
-          sendEmail(req.query);
-          res.status(200).json({message: 'email sent'})
+          sendEmail(req.body);
+         
+          res.status(200).json({message: 'Email sent'})
       } catch(err) {
         
-        res.status(500).send('Contact email not sent')
+        res.status(500).json({message: 'Email NOT sent'})
       }
   })
 

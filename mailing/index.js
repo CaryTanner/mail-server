@@ -3,6 +3,7 @@ import ejs from 'ejs';
 require('dotenv').config()
 const { google } = require('googleapis');
 const { OAuth2 } = google.auth;
+const hbs = require('nodemailer-express-handlebars');
 
 const OAUTH_PLAYGROUND = 'https://developers.google.com/oauthplayground';
 
@@ -13,7 +14,7 @@ const {
   SENDER_EMAIL_ADDRESS,
 } = process.env;
 
-const Mailing = {};
+
 
 const oauth2Client = new OAuth2(
   MAILING_SERVICE_CLIENT_ID,
@@ -21,18 +22,25 @@ const oauth2Client = new OAuth2(
   OAUTH_PLAYGROUND
 );
 
-const TEMPLATES = {
-  replycontact: {
-    fileName: 'replycontact.ejs',
-    subject: '[ABC Inc.] Welcome to ABC Inc.',
+
+
+const hbsOptions = {
+  viewEngine: {
+    partialsDir: __dirname + "/views/partials",
+    layoutsDir: __dirname + "/views/layouts",
+    extName: ".hbs"
   },
+  extName: ".hbs",
+  viewPath: __dirname + "views"
 };
+
+
 
 /**
  * Send Email
  */
 async function sendEmail(data){
-    
+    console.log(data)
    try { 
   oauth2Client.setCredentials({
     refresh_token: MAILING_SERVICE_REFRESH_TOKEN,
@@ -41,7 +49,7 @@ async function sendEmail(data){
   
   const accessToken =  await oauth2Client.getAccessToken();
   
-  
+
   
   const smtpTransport = nodemailer.createTransport({
     service: 'gmail',
@@ -55,37 +63,51 @@ async function sendEmail(data){
     },
     
   });
- 
-  const filePath = `${__dirname}/templates/${TEMPLATES[data.template].fileName}`;  
- 
-//   ejs.renderFile(filePath, data, {}, (e, content) => {
-//     if (e) return e;
-//     console.log(data.email)
-//     const mailOptions = {
-//       from: SENDER_EMAIL_ADDRESS,
-//       to: data.email,
-//       subject: TEMPLATES[data.template].subject,
-//       html: content,
-//     };  
-    
-//     smtpTransport.sendMail(mailOptions, (err, info) => {
-//         console.log(mailOptions)
-//       if (err) return err;
-//       return info;
-//     });
-    
-//   });
- 
-const mailOptions = {
+  
+// smtpTransport.use('compile', hbs(hbsOptions));
+
+
+
+const mailOptionsToNewContact = {
     from: `Cary Tanner <${SENDER_EMAIL_ADDRESS}>`,
     to: data.email,
-    subject: 'tester email',
-    text: "hello from email",
-    html: '<h1>hej ainhoa</h1> '
+    subject: 'Contact from Cary Tanner- Web Developer',
+   
+    html: `<h1> Hi ${data.name},</h1>
+
+    <h2> Thanks for getting in touch! </h2>
+    
+    <h2> This is an auto-reply but I will get back to you ASAP.</h2>
+    
+    <h2>All the best,</h2>
+    
+    <h1>Cary Tanner<h1>
+    
+    <h3> Web Developer- <a href="https://carytanner.com">carytanner.com</a></h3> 
+    `
 }
- const result =  await smtpTransport.sendMail(mailOptions )
- 
+
+const mailOptionsToCary = {
+  from: `Cary Tanner <${SENDER_EMAIL_ADDRESS}>`,
+  to: SENDER_EMAIL_ADDRESS,
+  subject: 'you have an new contact msg',
+  // template: 'contactReply.hbs',
+  // context: {
+  //   name: data.name
+  // }
+  html: `<h1> hey Cary</h1>
+  <h1> Someone wants to contact you: <h1>
+  <ul><li> From: ${data.name} </li> 
+  <li> email from: ${data.email} </li> 
+  <li> message: ${data.msg} </li>
+  </ul>`
+}
+
+
+  const result = await smtpTransport.sendMail(mailOptionsToNewContact) + smtpTransport.sendMail(mailOptionsToCary)
+
  return result
+
 
 
 } catch (error) {
