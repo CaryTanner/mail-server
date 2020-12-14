@@ -50,7 +50,7 @@ async function sendEmail(data){
   
   const accessToken =  await oauth2Client.getAccessToken();
   
-console.log(accessToken)
+
   
   const smtpTransport = nodemailer.createTransport({
     service: 'gmail',
